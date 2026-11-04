@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVS AI - Gold Analysis</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#eef2ff;font-family:Arial,sans-serif;padding:20px}
+.container{max-width:650px;margin:auto}
+header{text-align:center;padding:22px 10px}
+h1{color:#42e8c5;margin:0;font-size:34px}
+.sub{color:#9ba9c4;margin-top:8px}
+.card{background:#151e33;border:1px solid #293653;border-radius:15px;padding:18px;margin:15px 0}
+h2{font-size:18px;margin-top:0;color:#42e8c5}
+button{background:#42e8c5;color:#07131c;border:0;border-radius:9px;padding:12px 16px;font-weight:bold;width:100%;margin-top:10px}
+input{width:100%;padding:12px;margin:7px 0;background:#0b1020;color:white;border:1px solid #42516d;border-radius:8px}
+.signal{font-size:26px;font-weight:bold;text-align:center;padding:16px;color:#ffd166}
+.small{font-size:12px;color:#9ba9c4;line-height:1.5}
+img{max-width:100%;border-radius:10px;margin-top:12px}
+label{font-size:13px;color:#b9c5da}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>AVS AI</h1>
+<div class="sub">Smart Gold Chart Analysis Dashboard</div>
+<p class="small">Your trading assistant | XAUUSD</p>
+</header>
+
+<div class="card">
+<h2>Market Signal</h2>
+<div class="signal" id="signal">WAITING FOR ANALYSIS</div>
+<p class="small">This prototype does not receive live market data or generate verified AI predictions.</p>
+</div>
+
+<div class="card">
+<h2>Risk Calculator</h2>
+<label>Account balance ($)</label>
+<input id="balance" type="number" value="1000">
+<label>Risk percentage (%)</label>
+<input id="risk" type="number" value="1" step="0.1">
+<button onclick="calculate()">Calculate Risk</button>
+<p id="riskResult">Your risk amount will appear here.</p>
+</div>
+
+<div class="card">
+<h2>MT5 Chart Screenshot</h2>
+<input type="file" accept="image/*" onchange="preview(event)">
+<img id="preview" alt="Your chart preview" style="display:none">
+<p class="small">Upload your MT5 screenshot to view it here. The image is not automatically analysed.</p>
+</div>
+
+<div class="card">
+<h2>Manual Analysis Notes</h2>
+<label>Symbol</label>
+<input value="XAUUSD" id="symbol">
+<label>Timeframe</label>
+<input value="M15 / H1" id="timeframe">
+<label>Your observation</label>
+<input id="notes" placeholder="Write your market observation">
+<button onclick="saveNote()">Save Note</button>
+<p id="saved"></p>
+</div>
+
+<div class="card">
+<h2>AVS AI Status</h2>
+<p>Website version: 1.0</p>
+<p>Market feed: Not connected</p>
+<p>Analysis: Manual / Prototype</p>
+</div>
+<p class="small" style="text-align:center">AVS AI © 2026 | Educational tool only. Always test on a demo account.</p>
+</div>
+
+<script>
+function calculate(){
+ let b=Number(document.getElementById('balance').value);
+ let r=Number(document.getElementById('risk').value);
+ if(b<=0||r<=0||r>100){alert("Enter valid values");return;}
+ document.getElementById('riskResult').innerText=
+ "Maximum planned risk: $"+(b*r/100).toFixed(2);
+}
+function preview(e){
+ const f=e.target.files[0];
+ if(!f)return;
+ const img=document.getElementById('preview');
+ img.src=URL.createObjectURL(f);
+ img.style.display='block';
+}
+function saveNote(){
+ const n=document.getElementById('notes').value;
+ localStorage.setItem('avs_note',n);
+ document.getElementById('saved').innerText="Note saved on this browser.";
+}
+document.getElementById('notes').value=localStorage.getItem('avs_note')||"";
+</script>
+</body>
+</html>
